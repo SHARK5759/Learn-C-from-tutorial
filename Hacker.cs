@@ -6,6 +6,9 @@ using UnityEngine;
 public class Hacker : MonoBehaviour
 {
     //Game state
+    int level;
+    enum Screen { MainMenu, PassWord, Win };
+    Screen CurrentScreen = Screen.MainMenu;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,15 +33,18 @@ public class Hacker : MonoBehaviour
         }
         else if (input == "1")
         {
-            StartGame(1);
+            level = 1;
+            StartGame();
         }
         else if (input == "2")
         {
-            StartGame(2);
+            level = 2;
+            StartGame();
         }
         else if (input == "3")
         {
-            StartGame(3);
+            level = 3;
+            StartGame();
         }
         else
         {
@@ -47,8 +53,10 @@ public class Hacker : MonoBehaviour
             
         
     }
-    private void StartGame(int level)
+    private void StartGame()
     {
+        CurrentScreen = Screen.PassWord;
         Terminal.WriteLine("You have chosen level"+level);
+        Terminal.WriteLine("Please input your password");
     }
 }
