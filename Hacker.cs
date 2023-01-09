@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
+    string[] Level1Password = { "fish","bird","kid","sheep","self"};
+    string[] Level2Password = {"rainbow","computer","telephone","bedroom","electronic" };
     //Game state
     int level;
     enum Screen { MainMenu, PassWord, Win };
@@ -13,12 +15,13 @@ public class Hacker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CurrentScreen = Screen.MainMenu;
+       
         ShowMainMenu();
     }
     void ShowMainMenu()
     {
-        Terminal.ClearScreen();
+        CurrentScreen = Screen.MainMenu;
+        Terminal.ClearScreen();        
         Terminal.WriteLine("Hello L");
         Terminal.WriteLine("What would you like to hack into?\n");
         Terminal.WriteLine("Press 1 for the local library");
@@ -62,13 +65,13 @@ public class Hacker : MonoBehaviour
         if (input == "1")
         {
             level = 1;
-            password = "donkey";
+            password = Level1Password[2];
             StartGame();
         }
         else if (input == "2")
         {
             level = 2;
-            password = "hamburger";
+            password = Level2Password[3];
             StartGame();
         }
         else if (input == "3")
