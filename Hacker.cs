@@ -31,7 +31,16 @@ public class Hacker : MonoBehaviour
         {
             ShowMainMenu();
         }
-        else if (input == "1")
+        else if (CurrentScreen == Screen.MainMenu)
+        {
+            RunMainMenu(input);
+        }
+
+
+    }
+    void RunMainMenu(string input)
+    {
+        if (input == "1")
         {
             level = 1;
             StartGame();
@@ -50,9 +59,8 @@ public class Hacker : MonoBehaviour
         {
             Terminal.WriteLine("wrong number");
         }
-            
-        
     }
+
     private void StartGame()
     {
         CurrentScreen = Screen.PassWord;
