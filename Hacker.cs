@@ -6,7 +6,6 @@ using UnityEngine;
 public class Hacker : MonoBehaviour
 {
     //Game state
-    int level;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,18 +30,15 @@ public class Hacker : MonoBehaviour
         }
         else if (input == "1")
         {
-            level = 1;
-            StartGame();
+            StartGame(1);
         }
         else if (input == "2")
         {
-            level = 2;
-            StartGame();
+            StartGame(2);
         }
         else if (input == "3")
         {
-            level = 3;
-            StartGame();
+            StartGame(3);
         }
         else
         {
@@ -51,7 +47,7 @@ public class Hacker : MonoBehaviour
             
         
     }
-    private void StartGame()
+    private void StartGame(int level)
     {
         Terminal.WriteLine("You have chosen level"+level);
     }
