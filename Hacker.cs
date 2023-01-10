@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Hacker : MonoBehaviour
 {
@@ -48,7 +49,6 @@ public class Hacker : MonoBehaviour
 
 
     }
-
     void CheckPassword(string input)
     {
         if (input == password)
@@ -83,13 +83,13 @@ public class Hacker : MonoBehaviour
         switch (level)
         {
             case 1:
-                password = Level1Password[2];
+                password = Level1Password[Random.Range(0,Level1Password.Length)];
                 break;
             case 2:
-                password = Level2Password[0];
+                password = Level2Password[Random.Range(0, Level2Password.Length)];
                 break;
             case 3:
-                password = Level3Password[4];
+                password = Level3Password[Random.Range(0, Level3Password.Length)];
                 break;
             default:
                 Debug.LogError("Invalid level number");
@@ -97,4 +97,5 @@ public class Hacker : MonoBehaviour
         } 
         Terminal.WriteLine("please input your password");
     }
+
 }
