@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Hacker : MonoBehaviour
 {
+    string MenuHint = "you can type menu at any time ";
     string[] Level1Password = { "fish", "bird", "kid", "sheep", "self" };
     string[] Level2Password = { "rainbow", "computer", "telephone", "bedroom", "electronic" };
     string[] Level3Password = { "background", "disappoint", "earthquake", "interested", "understand" };
@@ -49,6 +50,49 @@ public class Hacker : MonoBehaviour
 
 
     }
+    void RunMainMenu(string input)
+    {
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
+        if (isValidLevelNumber)
+        {
+            level = int.Parse(input);//强制转换
+
+            AskForPassword();
+        }
+        else
+        {
+            Terminal.WriteLine("wrong number");
+            Terminal.WriteLine(MenuHint);
+        }
+    }
+    void AskForPassword()
+    {
+        CurrentScreen = Screen.PassWord;
+        Terminal.ClearScreen();
+        SetRandomPassword();
+        Terminal.WriteLine("Enter your password, hint: "+password.Anagram());
+        Terminal.WriteLine(MenuHint);
+    }
+
+    void SetRandomPassword()
+    {
+        switch (level)
+        {
+            case 1:
+                password = Level1Password[Random.Range(0, Level1Password.Length)];
+                break;
+            case 2:
+                password = Level2Password[Random.Range(0, Level2Password.Length)];
+                break;
+            case 3:
+                password = Level3Password[Random.Range(0, Level3Password.Length)];
+                break;
+            default:
+                Debug.LogError("Invalid level number");
+                break;
+        }
+    }
+
     void CheckPassword(string input)
     {
         if (input == password)
@@ -57,7 +101,7 @@ public class Hacker : MonoBehaviour
         }
         else
         {
-            Terminal.WriteLine("sorry you are wrong");
+            AskForPassword();
         }
     }
 
@@ -66,6 +110,7 @@ public class Hacker : MonoBehaviour
         CurrentScreen = Screen.Win;
         Terminal.ClearScreen();
         ShowWinScreen();
+        Terminal.WriteLine(MenuHint);
     }
 
     void ShowWinScreen()
@@ -79,15 +124,12 @@ public class Hacker : MonoBehaviour
        /       //
       /       //
      /_______//      
-    (_______(/
-                                    
+    (_______(/                                    
                           " );
                 break;
             case 2:
                 Terminal.WriteLine("have a cow...");
                 Terminal.WriteLine(@"
-
-
 ╭┐┌╮
 ╭┘└┘└╮
 └┐．．┌┘——╮
@@ -95,20 +137,15 @@ public class Hacker : MonoBehaviour
 │ｏ　ｏ│　　　│●
 ╰┬——╯　　　│
 　 \__|__/_____／
-
-
-");break;
+");
+                break;
             case 3:
                 Terminal.WriteLine("have a tank...");
                 Terminal.WriteLine(@"
-
-
 ~●█〓██▄▄▄▄▄▄ ●　●　●
 ▄▅██████▅▄▃▂
 ██████████████
 ◥⊙▲⊙▲⊙▲⊙▲⊙▲⊙▲◤
-
-
 "); break;
             default:
                 Debug.LogError("Invalid level reached");
@@ -117,41 +154,8 @@ public class Hacker : MonoBehaviour
         
     }
 
-    void RunMainMenu(string input)
-    {
-        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
-        if (isValidLevelNumber)
-        {
-            level = int.Parse(input);//强制转换
-            
-            StartGame();
-        }
-        else
-        {
-            Terminal.WriteLine("wrong number");
-        }
-    }
+   
 
-    void StartGame()
-    {  
-        CurrentScreen = Screen.PassWord;
-        Terminal.ClearScreen();      
-        switch (level)
-        {
-            case 1:
-                password = Level1Password[Random.Range(0,Level1Password.Length)];
-                break;
-            case 2:
-                password = Level2Password[Random.Range(0, Level2Password.Length)];
-                break;
-            case 3:
-                password = Level3Password[Random.Range(0, Level3Password.Length)];
-                break;
-            default:
-                Debug.LogError("Invalid level number");
-                break;
-        } 
-        Terminal.WriteLine("please input your password");
-    }
+   
 
 }
