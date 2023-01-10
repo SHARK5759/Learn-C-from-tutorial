@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Hacker : MonoBehaviour
 {
-    string[] Level1Password = { "fish","bird","kid","sheep","self"};
-    string[] Level2Password = {"rainbow","computer","telephone","bedroom","electronic" };
+    string[] Level1Password = { "fish", "bird", "kid", "sheep", "self" };
+    string[] Level2Password = { "rainbow", "computer", "telephone", "bedroom", "electronic" };
+    string[] Level3Password = { "background", "disappoint", "earthquake", "interested", "understand" };
     //Game state
     int level;
     enum Screen { MainMenu, PassWord, Win };
@@ -15,13 +17,13 @@ public class Hacker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+
         ShowMainMenu();
     }
     void ShowMainMenu()
     {
         CurrentScreen = Screen.MainMenu;
-        Terminal.ClearScreen();        
+        Terminal.ClearScreen();
         Terminal.WriteLine("Hello L");
         Terminal.WriteLine("What would you like to hack into?\n");
         Terminal.WriteLine("Press 1 for the local library");
@@ -47,12 +49,11 @@ public class Hacker : MonoBehaviour
 
 
     }
-
     void CheckPassword(string input)
     {
         if (input == password)
         {
-            Terminal.WriteLine("Good Job!");
+            DisplayWinScreen();
         }
         else
         {
@@ -60,24 +61,69 @@ public class Hacker : MonoBehaviour
         }
     }
 
+    void DisplayWinScreen()
+    {
+        CurrentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowWinScreen();
+    }
+
+    void ShowWinScreen()
+    {
+        switch (level)
+        {
+            case 1:
+               Terminal.WriteLine("have a book...");
+               Terminal.WriteLine(@"
+        ________
+       /       //
+      /       //
+     /_______//      
+    (_______(/
+                                    
+                          " );
+                break;
+            case 2:
+                Terminal.WriteLine("have a cow...");
+                Terminal.WriteLine(@"
+
+
+╭┐┌╮
+╭┘└┘└╮
+└┐．．┌┘——╮
+╭┴——┤★　　├╮
+│ｏ　ｏ│　　　│●
+╰┬——╯　　　│
+　 \__|__/_____／
+
+
+");break;
+            case 3:
+                Terminal.WriteLine("have a tank...");
+                Terminal.WriteLine(@"
+
+
+~●█〓██▄▄▄▄▄▄ ●　●　●
+▄▅██████▅▄▃▂
+██████████████
+◥⊙▲⊙▲⊙▲⊙▲⊙▲⊙▲◤
+
+
+"); break;
+            default:
+                Debug.LogError("Invalid level reached");
+                break;
+        }
+        
+    }
+
     void RunMainMenu(string input)
     {
-        if (input == "1")
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
+        if (isValidLevelNumber)
         {
-            level = 1;
-            password = Level1Password[2];
-            StartGame();
-        }
-        else if (input == "2")
-        {
-            level = 2;
-            password = Level2Password[3];
-            StartGame();
-        }
-        else if (input == "3")
-        {
-            level = 3;
-            password = "counterbalance";
+            level = int.Parse(input);//强制转换
+            
             StartGame();
         }
         else
@@ -86,10 +132,26 @@ public class Hacker : MonoBehaviour
         }
     }
 
-    private void StartGame()
-    {
+    void StartGame()
+    {  
         CurrentScreen = Screen.PassWord;
-        Terminal.WriteLine("You have chosen level " + level);
-        Terminal.WriteLine("Please input your password");
+        Terminal.ClearScreen();      
+        switch (level)
+        {
+            case 1:
+                password = Level1Password[Random.Range(0,Level1Password.Length)];
+                break;
+            case 2:
+                password = Level2Password[Random.Range(0, Level2Password.Length)];
+                break;
+            case 3:
+                password = Level3Password[Random.Range(0, Level3Password.Length)];
+                break;
+            default:
+                Debug.LogError("Invalid level number");
+                break;
+        } 
+        Terminal.WriteLine("please input your password");
     }
+
 }
