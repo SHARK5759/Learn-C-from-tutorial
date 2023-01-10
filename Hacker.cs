@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
-    string[] Level1Password = { "fish","bird","kid","sheep","self"};
-    string[] Level2Password = {"rainbow","computer","telephone","bedroom","electronic" };
+    string[] Level1Password = { "fish", "bird", "kid", "sheep", "self" };
+    string[] Level2Password = { "rainbow", "computer", "telephone", "bedroom", "electronic" };
+    string[] Level3Password = { "background", "disappoint", "earthquake", "interested", "understand" };
     //Game state
     int level;
     enum Screen { MainMenu, PassWord, Win };
@@ -15,13 +16,13 @@ public class Hacker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+
         ShowMainMenu();
     }
     void ShowMainMenu()
     {
         CurrentScreen = Screen.MainMenu;
-        Terminal.ClearScreen();        
+        Terminal.ClearScreen();
         Terminal.WriteLine("Hello L");
         Terminal.WriteLine("What would you like to hack into?\n");
         Terminal.WriteLine("Press 1 for the local library");
@@ -62,22 +63,11 @@ public class Hacker : MonoBehaviour
 
     void RunMainMenu(string input)
     {
-        if (input == "1")
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
+        if (isValidLevelNumber)
         {
-            level = 1;
-            password = Level1Password[2];
-            StartGame();
-        }
-        else if (input == "2")
-        {
-            level = 2;
-            password = Level2Password[3];
-            StartGame();
-        }
-        else if (input == "3")
-        {
-            level = 3;
-            password = "counterbalance";
+            level = int.Parse(input);//强制转换
+            
             StartGame();
         }
         else
@@ -86,10 +76,25 @@ public class Hacker : MonoBehaviour
         }
     }
 
-    private void StartGame()
-    {
+    void StartGame()
+    {  
         CurrentScreen = Screen.PassWord;
-        Terminal.WriteLine("You have chosen level " + level);
-        Terminal.WriteLine("Please input your password");
+        Terminal.ClearScreen();      
+        switch (level)
+        {
+            case 1:
+                password = Level1Password[2];
+                break;
+            case 2:
+                password = Level2Password[0];
+                break;
+            case 3:
+                password = Level3Password[4];
+                break;
+            default:
+                Debug.LogError("Invalid level number");
+                break;
+        } 
+        Terminal.WriteLine("please input your password");
     }
 }
