@@ -53,12 +53,68 @@ public class Hacker : MonoBehaviour
     {
         if (input == password)
         {
-            Terminal.WriteLine("Good Job!");
+            DisplayWinScreen();
         }
         else
         {
             Terminal.WriteLine("sorry you are wrong");
         }
+    }
+
+    void DisplayWinScreen()
+    {
+        CurrentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowWinScreen();
+    }
+
+    void ShowWinScreen()
+    {
+        switch (level)
+        {
+            case 1:
+               Terminal.WriteLine("have a book...");
+               Terminal.WriteLine(@"
+        ________
+       /       //
+      /       //
+     /_______//      
+    (_______(/
+                                    
+                          " );
+                break;
+            case 2:
+                Terminal.WriteLine("have a cow...");
+                Terminal.WriteLine(@"
+
+
+╭┐┌╮
+╭┘└┘└╮
+└┐．．┌┘——╮
+╭┴——┤★　　├╮
+│ｏ　ｏ│　　　│●
+╰┬——╯　　　│
+　 \__|__/_____／
+
+
+");break;
+            case 3:
+                Terminal.WriteLine("have a tank...");
+                Terminal.WriteLine(@"
+
+
+~●█〓██▄▄▄▄▄▄ ●　●　●
+▄▅██████▅▄▃▂
+██████████████
+◥⊙▲⊙▲⊙▲⊙▲⊙▲⊙▲◤
+
+
+"); break;
+            default:
+                Debug.LogError("Invalid level reached");
+                break;
+        }
+        
     }
 
     void RunMainMenu(string input)
